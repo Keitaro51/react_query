@@ -36,6 +36,16 @@ const Users = () => {
   //   (_, index) => index + 1
   // )
 
+  const getPagesCut = (pagesArray) => {
+    if (currentPage === 1) {
+      return pagesArray.slice(0, 3)
+    }
+    if (currentPage === users.total_pages) {
+      return pagesArray.slice(users.total_pages - 3)
+    }
+    return pagesArray.slice(currentPage - 2, currentPage + 1)
+  }
+
   return (
     <div>
       <h1>Users component</h1>
@@ -54,16 +64,21 @@ const Users = () => {
         </button>
 
         {/* problematic if high amount of pages / as many button than page */}
-        {pagesArray.map((page) => (
+        {currentPage > 2 && <span>...</span>}
+        {getPagesCut(pagesArray).map((page) => (
           <button
             key={page}
+            style={{
+              border: page !== currentPage && 'none',
+              background: page !== currentPage && 'none',
+            }}
             onClick={() => setCurrentPage(page)}
             disabled={isPreviousData}
           >
             {page}
           </button>
         ))}
-
+        {currentPage < users.total_pages - 1 && <span>...</span>}
         <button
           onClick={nextPage}
           disabled={isPreviousData || currentPage === users.total_pages}

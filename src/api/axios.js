@@ -5,6 +5,6 @@ export const axiosReq = axios.create({
 })
 
 export const getUsersPage = async (pageParam = 1) => {
-  const response = await axiosReq.get(`/users?page=${pageParam}&per_page=3`)
+  const response = await axiosReq.get(`/users?page=${pageParam}&per_page=1`)
   return response.data
 }
